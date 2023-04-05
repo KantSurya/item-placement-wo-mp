@@ -14,9 +14,12 @@ template<class T>
     }
 // ------------------------------------------------------------------------------------------------ 
 
+// ------------------------------------------------------------------------------------------------ 
+#define debugCell(cell) cout<<cell.x<<" "<<cell.y<<endl;
+
+// ------------------------------------------------------------------------------------------------ 
 
 Cell GetNextCell(Cell cell,int n,int m){
-    Cell nextCell = cell;
     cell.y++;
 
     if( cell.y == m){
@@ -24,11 +27,10 @@ Cell GetNextCell(Cell cell,int n,int m){
         cell.y = 0;
     }
 
-    return nextCell;
+    return cell;
 }
 
 Cell GetPrevCell(Cell cell,int n,int m){
-    Cell nextCell = cell;
     cell.y--;
 
     if( cell.y < 0){
@@ -36,5 +38,5 @@ Cell GetPrevCell(Cell cell,int n,int m){
         cell.y = m-1;
     }
 
-    return nextCell;
+    return cell;
 }
