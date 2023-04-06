@@ -1,7 +1,3 @@
-#include "utility.h"
-#include "variables.h"
-
-
 /*
     MUTATION
 */
@@ -34,8 +30,12 @@ vector<vector<int>> mutation_rsm(vector<vector<int>>warehouse){
 }
 
 
-vector<vector<int>> mutation_psm(vector<vector<int>>warehouse){
+vector<vi> mutation_psm(vector<vi>warehouse){
     // TODO : implement me
     return {};
 }
 
+vector<vi> crossover(vector<vi> a, vector<vi> b){
+    // TODO : implement me 
+    return {};
+}
