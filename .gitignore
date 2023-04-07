@@ -2,3 +2,7 @@ a.out
 template_GA.cpp
 *.txt
 Route_Optimization_Genetic
+sanity_checks*
+.vscode
+.json
+*.dSYM

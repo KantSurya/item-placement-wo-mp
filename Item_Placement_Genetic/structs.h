@@ -12,7 +12,7 @@ struct Cell{
         y = -1;
     }
 
-    void Setter(int x,int y){
+    Cell(int x,int y){
         this->x = x;
         this->y = y;
     }
