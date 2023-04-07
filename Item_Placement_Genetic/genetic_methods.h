@@ -99,3 +99,12 @@ vector<vi> crossover(vector<vi> a, vector<vi> b){
     }
     return child;  
 }
+
+void initialize(int rows, int cols){
+    population.clear();
+
+    // Initialize with random population
+    for(int i = 0 ; i < POPSIZE ; ++i){
+        population[i] = Genotype(GetRandomMember(rows,cols));
+    }
+}
