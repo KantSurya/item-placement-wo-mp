@@ -1,4 +1,5 @@
+#include "macros.h"
 #include "structs.h"
-#include "utility.h"
 #include "variables.h"
+#include "utility.h"
 #include "genetic_methods.h"

@@ -51,6 +51,15 @@ struct Order{
     GENETIC
 */
 
-struct genotype {
-    vector<vector<int>>warehouse;   // warehouse[i][j] : item in i,j cell
+struct Genotype {
+    vector<vi>Warehouse;   // warehouse[i][j] : item in i,j cell
+    double fitness;
+    
+    Genotype(){
+        this->Warehouse.clear();
+    }
+
+    Genotype(vector<vi>warehouse){
+        this->Warehouse = warehouse;
+    }
 };
