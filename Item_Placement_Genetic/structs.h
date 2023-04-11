@@ -53,7 +53,8 @@ struct Order{
 
 struct Genotype {
     vector<vi>Warehouse;   // warehouse[i][j] : item in i,j cell
-
+    double fitness;
+    
     Genotype(){
         this->Warehouse.clear();
     }
