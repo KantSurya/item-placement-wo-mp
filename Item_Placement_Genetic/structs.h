@@ -29,7 +29,12 @@ struct Item{
     vector<Cell>cells;  // cells where the item is available
 };
 
-// Structure to store all the details related to a single order
+/*
+Struct{
+    vector<int> items
+    vector<pair<int,Cell>> optimalPath
+}
+*/
 struct Order{
     vector<int>items;  // Item Numbers of all items in the order
     vector<pair<int,Cell>>optimalpath;  // Contains the sequence of steps robot needs to follow to cater the order

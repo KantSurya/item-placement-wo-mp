@@ -2,7 +2,7 @@
     MUTATION
 */
 
-double GetFitness(vector<vi>gene){
+double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
     // TODO : implement me 
     
     return -1.0;
