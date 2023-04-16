@@ -2,10 +2,11 @@
     MUTATION
 */
 
-double GetFitness(vector<vi>gene){
+double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
     // TODO : implement me 
-    
-    return -1.0;
+    find_best_path(allOrders,warehouse);
+    double t = cater_orders(allOrders);
+    return (1.0)/t;
 }
 
 // Implemented for Distinct item in each cell. 
