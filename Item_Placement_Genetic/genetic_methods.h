@@ -174,8 +174,16 @@ void keepTheBest(vector<Genotype>&new_population)
 
 
 void initialize(int rows, int cols){
-    population.clear();
 
+
+    // Genetic variables
+    POPSIZE = 4 * num_of_orders;
+    MAXGENS = 30;
+    PMUTATION = 0.5;
+
+    population.clear();
+    population = vector<Genotype>(POPSIZE);
+    
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
         population[i] = Genotype(GetRandomMember(rows,cols));
@@ -199,6 +207,6 @@ void report ( int generation )
     double catering_time = 1 / bestFitness;
     catering_time = ( catering_time * 1.0 ) / velocity;
 
-    cout << "Generation " << generation << "  ---->  " << catering_time / 60 << " hrs\n" ; 
+    cout << "Generation " << generation << "  ---->  " << catering_time/60.0 << " hrs\n" ; 
 
 }

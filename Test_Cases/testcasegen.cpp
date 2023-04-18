@@ -201,7 +201,7 @@ void out_for_test(){
 
 int main(){
     FASTIO;
-    freopen("input.txt", "w", stdout);
+    freopen("../Item_Placement_Genetic/input.txt", "w", stdout);
     int test_case = 1;
     cout << test_case << endl;
     while(test_case--){
