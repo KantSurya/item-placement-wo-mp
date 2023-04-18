@@ -44,12 +44,14 @@ int main(){
             
             children.push_back(Genotype(child));
         }
+
         vector<Genotype> newPopulation = population;
         for(auto & child : children){
             double rand = r8_uniform_ab(0.0,1.0);
             if(rand < PMUTATION){
                 child.Warehouse = mutation_rsm(child.Warehouse);
             }
+            
             child.fitness = GetFitness(child.Warehouse,allOrders);
             newPopulation.push_back(child);
         }

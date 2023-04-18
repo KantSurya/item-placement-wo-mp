@@ -113,6 +113,7 @@ int roulette_wheel_selection(vector<pair<double,int>>&probability)
     double rand=r8_uniform_ab(0.0,1.0);
     int lo=0,hi=n-1;
     // TTTTTFFFF
+    
     while(lo<hi)
     {
         int mid=(lo+hi+1)/2;
@@ -121,6 +122,7 @@ int roulette_wheel_selection(vector<pair<double,int>>&probability)
         else
             hi=mid-1;
     }
+
     return probability[lo].second;
 }
 
@@ -156,6 +158,7 @@ vector<pair<int,int>> select_parent_pairs(int numParents)
     for(int i=0;i<numParents;i++){
         int parent1=roulette_wheel_selection(probability_top);
         int parent2=roulette_wheel_selection(probability_bottom);
+
         parents.push_back({parent1,parent2});
     }
     return parents;
