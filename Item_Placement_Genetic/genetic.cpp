@@ -8,6 +8,10 @@ using namespace std;
 // ------------------------------------------------------------------------------------------------ 
 
 void take_input(){
+    freopen("input.txt","r",stdin);
+    int t;   
+    cin>>t;
+
     cin>> ROWS >> COLS ;
     cin>> docking_time >> velocity >> capacity_of_robot ;
     cin>> num_of_robots >> num_of_orders ;
@@ -25,11 +29,14 @@ void take_input(){
 
             currOrder.items.push_back(o);
         }
+
+        allOrders.push_back(currOrder);
     }
 }
 
 int main(){
-    cout<<"hola\n";
+    hola;
+    take_input();
 
     initialize(ROWS,COLS);
 
@@ -41,7 +48,6 @@ int main(){
 
         for(auto &ind : parent_pairs){
             vector<vi>child = crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
-            
             children.push_back(Genotype(child));
         }
 
@@ -51,7 +57,7 @@ int main(){
             if(rand < PMUTATION){
                 child.Warehouse = mutation_rsm(child.Warehouse);
             }
-            
+
             child.fitness = GetFitness(child.Warehouse,allOrders);
             newPopulation.push_back(child);
         }
@@ -62,7 +68,7 @@ int main(){
 
             newPopulation.push_back(randomMember);
         }
-
+        
         keepTheBest(newPopulation);
 
         report ( currGen );

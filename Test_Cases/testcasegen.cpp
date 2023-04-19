@@ -139,7 +139,7 @@ void out_for_test(){
     num_of_robots = max_number_robots;
     velocity = max_velocity;
     docking_time = max_docking_time;
-    number_of_total_items=max_number_of_total_items;
+    number_of_total_items=ROWS*COLS;
 
     
     int gap = 10,rep = 10;
@@ -185,6 +185,7 @@ void out_for_test(){
             for(auto &x:ind[i + 1][r]) new_set_of_item.push_back(x);
             tot_ord.push_back(new_set_of_item);
         }
+
     }
     num_of_orders = tot_ord.size();
     cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;
