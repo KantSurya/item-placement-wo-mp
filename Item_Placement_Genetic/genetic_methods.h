@@ -113,6 +113,7 @@ int roulette_wheel_selection(vector<pair<double,int>>&probability)
     double rand=r8_uniform_ab(0.0,1.0);
     int lo=0,hi=n-1;
     // TTTTTFFFF
+    
     while(lo<hi)
     {
         int mid=(lo+hi+1)/2;
@@ -121,6 +122,7 @@ int roulette_wheel_selection(vector<pair<double,int>>&probability)
         else
             hi=mid-1;
     }
+
     return probability[lo].second;
 }
 
@@ -156,6 +158,7 @@ vector<pair<int,int>> select_parent_pairs(int numParents)
     for(int i=0;i<numParents;i++){
         int parent1=roulette_wheel_selection(probability_top);
         int parent2=roulette_wheel_selection(probability_bottom);
+
         parents.push_back({parent1,parent2});
     }
     return parents;
@@ -174,8 +177,16 @@ void keepTheBest(vector<Genotype>&new_population)
 
 
 void initialize(int rows, int cols){
-    population.clear();
 
+
+    // Genetic variables
+    POPSIZE = 4 * num_of_orders;
+    MAXGENS = 30;
+    PMUTATION = 0.5;
+
+    population.clear();
+    population = vector<Genotype>(POPSIZE);
+    
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
         population[i] = Genotype(GetRandomMember(rows,cols));
@@ -199,6 +210,6 @@ void report ( int generation )
     double catering_time = 1 / bestFitness;
     catering_time = ( catering_time * 1.0 ) / velocity;
 
-    cout << "Generation " << generation << "  ---->  " << catering_time / 60 << " hrs\n" ; 
+    cout << "Generation " << generation << "  ---->  " << catering_time/60.0 << " hrs\n" ; 
 
 }
