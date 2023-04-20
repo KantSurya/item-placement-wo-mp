@@ -18,7 +18,7 @@ int calc(Order &order,map<int,pair<int,int>> coord,vector<int> &perm){
     return tot;
 }
 
-void find_best_path(vector<Order> &allorders,vector<vi> &mat){
+void find_best_path(vector<Order> &allOrders,vector<vi> &mat){
     //permutation
     map<int,pair<int,int>> m;
     for(int i = 0; i < ROWS; i++){
