@@ -58,20 +58,20 @@ T rand() {
 
 const int max_docking_time = 12;        
 const int max_number_robots = 800;      
-const int max_number_order = 160000;   
-const int max_order_size = 5;
+const int max_number_order = 1000;   
+const int max_order_size = 3;
 const double max_velocity = 80.4672;  // metre/min
 const int capacity_of_robot = 6;  
-const int max_number_of_total_items = 1000;
-const int max_cells_in_item = 5;  
+const int max_cells_in_item = 1;  
 
 
-int ROWS = 250, COLS = 250;     // 250m x 250m 
+int ROWS = 50, COLS = 50;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
 double velocity;
 int number_of_total_items;
+int max_number_of_total_items;
 
 // void out_for_test(){
 
@@ -140,7 +140,7 @@ void out_for_test(){
     velocity = max_velocity;
     docking_time = max_docking_time;
     number_of_total_items=ROWS*COLS;
-
+    max_number_of_total_items = ROWS*COLS;
     
     int gap = 10,rep = 10;
     vector<int> bit_count;
@@ -185,7 +185,9 @@ void out_for_test(){
             for(auto &x:ind[i + 1][r]) new_set_of_item.push_back(x);
             tot_ord.push_back(new_set_of_item);
         }
-
+        if(tot_ord.size()>9){
+            break;
+        }
     }
     num_of_orders = tot_ord.size();
     cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;

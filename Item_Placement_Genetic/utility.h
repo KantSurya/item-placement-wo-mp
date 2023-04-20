@@ -13,6 +13,17 @@ template<class T>
     }
 // ------------------------------------------------------------------------------------------------ 
 
+void printTimeElapsedMins(clock_t tStart,string s){
+  cout<<s<<endl;
+  cout<<"Time elapsed since start : "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/60.0<<" mins\n\n";
+}
+
+void printTimeElapsedSeconds(clock_t tStart,string s){
+  cout<<s<<endl;
+  cout<<"Time elapsed since start : "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)<<" seconds\n\n";
+}
+// ------------------------------------------------------------------------------------------------ 
+
 bool IsEqualCell(Cell a, Cell b){
     return (a.x==b.x && a.y==b.y);
 }
@@ -64,6 +75,7 @@ int distance(Cell& a, Cell& b){
 }
 
 vector<vi>GetRandomMember(int n,int m){
+    // clock_t start = clock();
     vector<int>ar(n*m);
     for(int i = 0 ; i < n*m ; ++i){
         ar[i] = i;
@@ -77,7 +89,6 @@ vector<vi>GetRandomMember(int n,int m){
 
         randomMember[x][y] = ar[i];
     }
-
     return randomMember;
 }
 
