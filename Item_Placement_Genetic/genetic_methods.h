@@ -47,7 +47,7 @@ vector<vi> crossover(vector<vi> a, vector<vi> b){
         return {{-1}};
     }
     int m = a[0].size();
-
+    
     vector<vi>child(n,vi(m));
     Cell i = Cell(0,0);
 
@@ -177,8 +177,6 @@ void keepTheBest(vector<Genotype>&new_population)
 
 
 void initialize(int rows, int cols){
-
-
     // Genetic variables
     POPSIZE = 4 * num_of_orders;
     MAXGENS = 30;
@@ -190,7 +188,11 @@ void initialize(int rows, int cols){
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
         population[i] = Genotype(GetRandomMember(rows,cols));
+        population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
     }
+
+    // TODO : Figure out why 0th population is coming as infinity
+    population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
 }
 
 void report ( int generation )
@@ -205,11 +207,11 @@ void report ( int generation )
             bestMember = i;
             bestFitness = population[i].fitness;
         }
-    }
+    }   
 
-    double catering_time = 1 / bestFitness;
-    catering_time = ( catering_time * 1.0 ) / velocity;
+    double catering_time = 1.0 / (bestFitness*1.0);
+    catering_time = ( catering_time * 1.0 ) / (velocity*1.0);
 
-    cout << "Generation " << generation << "  ---->  " << catering_time/60.0 << " hrs\n" ; 
+    cout << "Generation " << generation << "  ---->  " << catering_time << " mins\n" ; 
 
 }

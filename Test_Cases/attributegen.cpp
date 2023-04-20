@@ -62,11 +62,11 @@ const int max_number_order = 160000;
 const int max_order_size = 5;
 const double max_velocity = 80.4672;  // metre/min
 const int capacity_of_robot = 6;  
-const int max_number_of_total_items = 1000;
+int max_number_of_total_items;
 const int max_cells_in_item = 5;  
 
 
-int ROWS = 250, COLS = 250;     // 250m x 250m 
+int ROWS = 50, COLS = 50;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
@@ -139,8 +139,8 @@ void out_for_test(){
     num_of_robots = max_number_robots;
     velocity = max_velocity;
     docking_time = max_docking_time;
-    number_of_total_items=max_number_of_total_items;
-
+    number_of_total_items=ROWS*COLS;
+    max_number_of_total_items = ROWS * COLS;
     
     int gap = 10,rep = 10;
     vector<int> bit_count;
@@ -174,6 +174,9 @@ void out_for_test(){
         }
         shuffle(ind[id].begin(),ind[id].end(),rng);
         id++;
+        if(num_of_orders>9){
+            break;
+        }
     }
     cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;
     cout << num_of_robots << " " << num_of_orders << endl;
@@ -182,19 +185,18 @@ void out_for_test(){
     vector<vector<int>> ans;
     for(int i = 0; i < id; i++){
         for(auto &x:ind[i]){
+            cout<<x.size()<<endl;
             for(auto &y:x) cout << y << " ";
             cout << endl;
         }
 
     }
     
-    
 }
-
 
 int main(){
     FASTIO;
-    freopen("input.txt", "w", stdout);
+    freopen("../Item_Placement_Genetic/input.txt", "w", stdout);
     int test_case = 1;
     cout << test_case << endl;
     while(test_case--){

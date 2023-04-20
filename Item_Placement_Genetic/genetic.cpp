@@ -30,7 +30,7 @@ void take_input(){
             currOrder.items.push_back(o);
         }
 
-        allOrders.push_back(currOrder);
+        allOrders[i] = currOrder;
     }
 }
 
@@ -40,6 +40,8 @@ int main(){
 
     initialize(ROWS,COLS);
 
+    clock_t geneticStartTime = clock();
+
     for( int currGen = 1 ; currGen <= MAXGENS ; currGen++){
         clock_t tStart=clock();
 
@@ -48,6 +50,7 @@ int main(){
 
         for(auto &ind : parent_pairs){
             vector<vi>child = crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
+
             children.push_back(Genotype(child));
         }
 
@@ -65,7 +68,7 @@ int main(){
         for(int i = 0 ; i < 0.2 * POPSIZE ; ++i){
             Genotype randomMember = GetRandomMember(ROWS,COLS);
             randomMember.fitness = GetFitness(randomMember.Warehouse,allOrders);
-
+            
             newPopulation.push_back(randomMember);
         }
         
@@ -73,7 +76,13 @@ int main(){
 
         report ( currGen );
 
-        cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/60<<" mins\n\n";
+        cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/1.0<<" seconds\n\n";
 
     }
+    cout << "---------------------------------------------------------------------------" << endl;
+    
+    cout<<" Number of orders : " << allOrders.size() << endl;
+    cout<<" Warehouse size : " << ROWS << " x " << COLS << endl;
+
+    printTimeElapsedMins(geneticStartTime,"Total time for GA :- ");
 }
