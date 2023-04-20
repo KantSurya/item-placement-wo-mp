@@ -3,7 +3,7 @@ int dist(pair<int,int> &a,pair<int,int> &b){
 }
 
 
-int calc(Order &order,map<int,pair<int,int>> coord,vector<int> &perm){
+int calc(Order &order,unordered_map<int,pair<int,int>> &coord,vector<int> &perm){
     int tot = 0;
     int last = -1;
 
@@ -18,16 +18,16 @@ int calc(Order &order,map<int,pair<int,int>> coord,vector<int> &perm){
     return tot;
 }
 
-void find_best_path(vector<Order> &allOrders,vector<vi> &mat){
+void find_best_path(vector<Order> &orders,vector<vi> &mat){
     //permutation
-    map<int,pair<int,int>> m;
+    unordered_map<int,pair<int,int>> m;
     for(int i = 0; i < ROWS; i++){
         for(int j = 0; j < COLS; j++){
             m[mat[i][j]] = {i,j};
         }
     }   
 
-    for(auto &order:allOrders){
+    for(auto &order:orders){
         int n = order.getOrderSize();
         vector<int> perm(n);
         iota(perm.begin(),perm.end(),0);
