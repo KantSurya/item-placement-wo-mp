@@ -55,7 +55,24 @@ void mutation_rsm(vector<vector<int>>&warehouse){
 
 
 void mutation_psm(vector<vi>&warehouse){
-    // TODO : implement me
+    int n = warehouse.size();
+    if(n<1){
+        warehouse = vector<vi>(1,vi(1,-1));
+        _error("Empty warehouse provided for mutation");
+        return;
+    }
+    int m = warehouse[0].size();
+
+    double psmMutationProb = 0.8;
+    fi(0,n-1){
+        fj(0,m-1){
+            double p = r8_uniform_ab(0.0,1.0);
+            if( p < psmMutationProb ){
+                Cell randomCell = GetRandomCell(n,m);
+                swap( warehouse[i][j] , warehouse[randomCell.x][randomCell.y]  );
+            }
+        }
+    }
     return ;
 }
 
