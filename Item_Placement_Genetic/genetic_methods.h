@@ -1,3 +1,10 @@
+double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
+    // TODO : implement me 
+    find_best_path(allOrders,warehouse);
+    double t = cater_orders(allOrders);
+    return (1.0)/t;
+}
+
 void initialize(int rows, int cols){
     // Genetic variables
     POPSIZE = 4 * num_of_orders;
@@ -15,13 +22,6 @@ void initialize(int rows, int cols){
 
     // TODO : Figure out why 0th population is coming as infinity
     population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
-}
-
-double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
-    // TODO : implement me 
-    find_best_path(allOrders,warehouse);
-    double t = cater_orders(allOrders);
-    return (1.0)/t;
 }
 
 /*
@@ -56,7 +56,7 @@ void mutation_rsm(vector<vector<int>>&warehouse){
 
 void mutation_psm(vector<vi>&warehouse){
     // TODO : implement me
-    return {};
+    return ;
 }
 
 // Implemented for Distinct item in each cell. 
