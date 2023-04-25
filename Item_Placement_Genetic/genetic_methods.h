@@ -1,6 +1,21 @@
-/*
-    MUTATION
-*/
+void initialize(int rows, int cols){
+    // Genetic variables
+    POPSIZE = 4 * num_of_orders;
+    MAXGENS = 30;
+    PMUTATION = 0.5;
+
+    population.clear();
+    population = vector<Genotype>(POPSIZE);
+    
+    // Initialize with random population
+    for(int i = 0 ; i < POPSIZE ; ++i){
+        population[i] = Genotype(GetRandomMember(rows,cols));
+        population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
+    }
+
+    // TODO : Figure out why 0th population is coming as infinity
+    population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
+}
 
 double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
     // TODO : implement me 
@@ -9,11 +24,17 @@ double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
     return (1.0)/t;
 }
 
+/*
+    MUTATION
+*/
+
 // Implemented for Distinct item in each cell. 
-vector<vector<int>> mutation_rsm(vector<vector<int>>warehouse){
+void mutation_rsm(vector<vector<int>>&warehouse){
     int n = warehouse.size();
     if(n<1){
-        return warehouse;
+        warehouse = vector<vi>(1,vi(1,-1));
+        _error("Empty warehouse provided for mutation");
+        return;
     }
     int m = warehouse[0].size();
 
@@ -30,23 +51,21 @@ vector<vector<int>> mutation_rsm(vector<vector<int>>warehouse){
         i = GetNextCell(i,n,m);
         j = GetPrevCell(j,n,m);
     }
-
-    return warehouse;
 }
 
 
-vector<vi> mutation_psm(vector<vi>warehouse){
+void mutation_psm(vector<vi>&warehouse){
     // TODO : implement me
     return {};
 }
 
 // Implemented for Distinct item in each cell. 
-vector<vi> crossover(vector<vi> a, vector<vi> b){
-    int n = a.size();
+vector<vi> crossover(vector<vi>&parentA, vector<vi>&parentB){
+    int n = parentA.size();
     if(n<1){
         return {{-1}};
     }
-    int m = a[0].size();
+    int m = parentA[0].size();
     
     vector<vi>child(n,vi(m));
     Cell i = Cell(0,0);
@@ -56,17 +75,17 @@ vector<vi> crossover(vector<vi> a, vector<vi> b){
 
     fi(0,n-1){
         fj(0,m-1){
-            itemSet.insert(b[i][j]);
+            itemSet.insert(parentB[i][j]);
 
-            itemIndexB[ b[i][j] ] = Cell(i,j);
-            itemIndexA[ a[i][j] ] = Cell(i,j);
+            itemIndexB[ parentB[i][j] ] = Cell(i,j);
+            itemIndexA[ parentA[i][j] ] = Cell(i,j);
         }
     }
     
     Cell startInd = GetRandomCell(n,m);
     Cell invalidInd = Cell(-1,-1);
 
-    int currItem = a[startInd.x][startInd.y];
+    int currItem = parentA[startInd.x][startInd.y];
     child[i.x][i.y] = currItem;
 
     i = GetNextCell(i,n,m);
@@ -79,18 +98,18 @@ vector<vi> crossover(vector<vi> a, vector<vi> b){
         itemIndexA[currItem] = invalidInd;
         itemIndexB[currItem] = invalidInd;
 
-        int nextItemA = a[nextCellA.x][nextCellA.y];
-        int nextItemB = b[nextCellB.x][nextCellB.y];
+        int nextItemA = parentA[nextCellA.x][nextCellA.y];
+        int nextItemB = parentB[nextCellB.x][nextCellB.y];
 
         // keep incrementing the index untill cell with item is found
         while( IsEqualCell(itemIndexA[nextItemA] , invalidInd)){
             nextCellA = GetNextCell(nextCellA,n,m);
-            nextItemA = a[nextCellA.x][nextCellA.y];
+            nextItemA = parentA[nextCellA.x][nextCellA.y];
         }
     
         while( IsEqualCell(itemIndexB[nextItemB] , invalidInd)){
             nextCellB = GetNextCell(nextCellB,n,m);
-            nextItemB = b[nextCellB.x][nextCellB.y];
+            nextItemB = parentB[nextCellB.x][nextCellB.y];
         }
 
         int nextItem = nextItemA;
@@ -173,26 +192,6 @@ void keepTheBest(vector<Genotype>&new_population)
     for(int i=0;i<POPSIZE;i++){
         population[i]=new_population[i];
     }
-}
-
-
-void initialize(int rows, int cols){
-    // Genetic variables
-    POPSIZE = 4 * num_of_orders;
-    MAXGENS = 30;
-    PMUTATION = 0.5;
-
-    population.clear();
-    population = vector<Genotype>(POPSIZE);
-    
-    // Initialize with random population
-    for(int i = 0 ; i < POPSIZE ; ++i){
-        population[i] = Genotype(GetRandomMember(rows,cols));
-        population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
-    }
-
-    // TODO : Figure out why 0th population is coming as infinity
-    population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
 }
 
 void report ( int generation )
