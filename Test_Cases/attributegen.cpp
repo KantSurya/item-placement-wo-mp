@@ -57,16 +57,16 @@ T rand() {
 }
 
 const int max_docking_time = 12;        
-const int max_number_robots = 800;      
-const int max_number_order = 160000;   
-const int max_order_size = 5;
+const int max_number_robots = 5;      
+const int max_number_order = 500;   
+const int max_order_size = 3;
 const double max_velocity = 80.4672;  // metre/min
 const int capacity_of_robot = 6;  
 int max_number_of_total_items;
 const int max_cells_in_item = 5;  
 
 
-int ROWS = 50, COLS = 50;     // 250m x 250m 
+int ROWS = 100, COLS = 100;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
@@ -174,7 +174,7 @@ void out_for_test(){
         }
         shuffle(ind[id].begin(),ind[id].end(),rng);
         id++;
-        if(num_of_orders>9){
+        if(num_of_orders>49){
             break;
         }
     }
