@@ -1,3 +1,30 @@
+
+void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
+    int t = 1;
+    cout<< t ;
+
+    cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;
+    cout << num_of_robots << " " << num_of_orders << endl;
+    cout << number_of_total_items << " " << endl;
+
+    // which item in present in which cell
+    map<int,pii>sortedItemLocations;
+    int n = warehouse.size();
+    int m = warehouse[0].size();
+
+    fi(0,n-1){
+        fj(0,m-1){
+            sortedItemLocations[warehouse[i][j]] = {i,j};
+        }
+    }
+
+    fi(0,number_of_total_items-1){
+        // since each item is present at only one location
+        cout<< 1 << endl;
+        cout<<sortedItemLocations[i].first<<" "<<sortedItemLocations[i].second<<endl;
+    }
+}
+
 double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
     // TODO : implement me 
     find_best_path(allOrders,warehouse);

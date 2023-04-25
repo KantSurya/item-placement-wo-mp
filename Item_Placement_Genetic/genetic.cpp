@@ -35,13 +35,19 @@ void take_input(){
 }
 
 int main(){
+    FASTIO;
     hola;
     take_input();
-
     initialize(ROWS,COLS);
 
+    _log("");
+    cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
+    cout<<"Number of orders : " << num_of_orders << endl;
+    cout<<"Capacity of robots : " << capacity_of_robot << endl;
+    cout<<"Distinct items in warehouse : " << ROWS * COLS << endl;
     clock_t geneticStartTime = clock();
 
+    _log("GA started : ");
     for( int currGen = 1 ; currGen <= MAXGENS ; currGen++){
         clock_t tStart=clock();
 
@@ -79,10 +85,6 @@ int main(){
         cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/1.0<<" seconds\n\n";
 
     }
-    cout << "---------------------------------------------------------------------------" << endl;
-    
-    cout<<" Number of orders : " << allOrders.size() << endl;
-    cout<<" Warehouse size : " << ROWS << " x " << COLS << endl;
-
+    _log("")    
     printTimeElapsedMins(geneticStartTime,"Total time for GA :- ");
 }
