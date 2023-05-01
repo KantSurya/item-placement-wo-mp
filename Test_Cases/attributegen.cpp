@@ -189,8 +189,18 @@ void out_for_test(){
             for(auto &y:x) cout << y << " ";
             cout << endl;
         }
-
     }
+    // For test case generation, should not affect current genetic algo , still test this once
+    cout << id << endl;
+    for(int i = 0; i < id; i++){
+        cout << ind[i].size() << endl;
+        for(auto &x:ind[i]){
+            cout<<x.size()<<endl;
+            for(auto &y:x) cout << y << " ";
+            cout << endl;
+        }
+    }
+
     
 }
 
