@@ -58,12 +58,12 @@ T rand() {
 
 const int max_docking_time = 12;        
 const int max_number_robots = 5;      
-const int max_number_order = 500;   
+const int max_number_order = 100;   
 const int max_order_size = 3;
 const double max_velocity = 80.4672;  // metre/min
-const int capacity_of_robot = 6;  
+int capacity_of_robot = 6;  
 int max_number_of_total_items;
-const int max_cells_in_item = 5;  
+const int max_cells_in_item = 1;  
 
 
 int ROWS = 100, COLS = 100;     // 250m x 250m 
@@ -134,6 +134,7 @@ void out_for_test(){
     // num_of_orders = rand(1,max_number_order);
     // num_of_robots = rand(1,max_number_robots);
     // velocity = rand(()1,max_velocity);
+
     docking_time = 0 ; 
     num_of_robots = max_number_robots;
     velocity = max_velocity;
@@ -173,7 +174,7 @@ void out_for_test(){
         }
         shuffle(ind[id].begin(),ind[id].end(),rng);
         id++;
-        if(num_of_orders>49){
+        if(num_of_orders>=max_number_order){
             break;
         }
     }
@@ -188,13 +189,24 @@ void out_for_test(){
             for(auto &y:x) cout << y << " ";
             cout << endl;
         }
-
     }
+    // For test case generation, should not affect current genetic algo , still test this once
+    cout << id << endl;
+    for(int i = 0; i < id; i++){
+        cout << ind[i].size() << endl;
+        for(auto &x:ind[i]){
+            cout<<x.size()<<endl;
+            for(auto &y:x) cout << y << " ";
+            cout << endl;
+        }
+    }
+
+    
 }
 
 int main(){
     FASTIO;
-    freopen("../Item_Placement_Genetic/input.txt", "w", stdout);
+    freopen("input.txt", "w", stdout);
     int test_case = 1;
     cout << test_case << endl;
     while(test_case--){

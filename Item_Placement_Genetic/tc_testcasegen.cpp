@@ -57,11 +57,11 @@ T rand() {
 }
 
 const int max_docking_time = 12;        
-const int max_number_robots = 800;      
-const int max_number_order = 1000;   
+const int max_number_robots = 5;      
+const int max_number_order = 100;   
 const int max_order_size = 3;
 const double max_velocity = 80.4672;  // metre/min
-const int capacity_of_robot = 6;  
+int capacity_of_robot = 6;  
 const int max_cells_in_item = 1;  
 
 
@@ -134,59 +134,62 @@ void out_for_test(){
     // num_of_orders = rand(1,max_number_order);
     // num_of_robots = rand(1,max_number_robots);
     // velocity = rand(()1,max_velocity);
+    int t;
+    cin >> t;
+    cin>> ROWS >> COLS ;
+    cin>> docking_time >> velocity; 
+    cin >> capacity_of_robot ;
+    cin>> num_of_robots >> num_of_orders ;
+    cin>> number_of_total_items ;
 
-    docking_time = 0 ; 
-    num_of_robots = max_number_robots;
-    velocity = max_velocity;
-    docking_time = max_docking_time;
-    number_of_total_items=ROWS*COLS;
-    max_number_of_total_items = ROWS*COLS;
+    for(int i = 0 ; i < num_of_orders ; ++i){
+        int orderSize;
+        cin >> orderSize;
+        for(int j = 0 ; j < orderSize ; ++j){
+            int o;
+            cin>>o;
+        }
+    }
+
+    int id;
+    cin >> id;
     
-    int gap = 10,rep = 10;
-    vector<int> bit_count;
-    for(int i = 1; i < (1<<gap); i++){
-        int cnt = 0;
-        for(int j = 0; j < gap; j++){
-            cnt += ((i >> j)&1);
-        }
-        if(cnt <= 3) bit_count.push_back(i);
-    }
-    int s = bit_count.size();
-    int id = 0;
-    vector<vector<vector<int>>> ind;
-    vector<vector<int>> tot_ord;
-    set<int> num;
-    for(int i = 0; i < max_number_of_total_items; i += gap){
-        ind.emplace_back();
-        for(int r = 0; r < rep; r++){
-            vector<int> items;
-            int val = rand(0,s - 1);
-            int bit = bit_count[val];
-            for(int j = 0; j < gap; j++){
-                if((bit>>j)&1){
-                    items.push_back(i + j);
-                }
+    vector<vector<vector<int>>> ind(id);
+    for(int i = 0; i < id; i++){
+        int tmp_size;
+        cin >> tmp_size;
+        ind[i].resize(tmp_size);
+        for(int j = 0; j < tmp_size; j++){
+            int inner_tmp_size;
+            cin >> inner_tmp_size;
+            ind[i][j].resize(inner_tmp_size);
+            for(int k = 0; k < inner_tmp_size; k++){
+                cin >> ind[i][j][k];
             }
-            ind[id].push_back(items);
         }
-        shuffle(ind[id].begin(),ind[id].end(),rng);
-        id++;
     }
+    vector<vector<int>> tot_ord;
+    int number_of_shuffling = 10;
     shuffle(ind.begin(),ind.end(),rng);
     vector<vector<int>> ans;
-    for(int i = 0; i < id; i+=2){
-        if(i + 1 >= id){ 
+    int to_do = 1;
+    while(to_do--){
+        for(int i = 0; i < id; i+=2){
             for(auto &x:ind[i]) tot_ord.push_back(x);
-            break;
-        }
-        for(int r = 0; r < rep; r++){   
-            vector<int> new_set_of_item;
-            for(auto &x:ind[i][r]) new_set_of_item.push_back(x);
-            for(auto &x:ind[i + 1][r]) new_set_of_item.push_back(x);
-            tot_ord.push_back(new_set_of_item);
-        }
-        if(tot_ord.size()>9){
-            break;
+            if(i + 1 >= id){ 
+                for(auto &x:ind[i]) tot_ord.push_back(x);
+                break;
+            }
+            for(int r = 0; r < ind[i].size(); r++){   
+                vector<int> new_set_of_item;
+                for(auto &x:ind[i][r]) new_set_of_item.push_back(x);
+                for(auto &x:ind[i + 1][r]) new_set_of_item.push_back(x);
+                tot_ord.push_back(new_set_of_item);
+            }
+
+            if(tot_ord.size() > max_number_order){
+                break;
+            }
         }
     }
     num_of_orders = tot_ord.size();
@@ -198,12 +201,15 @@ void out_for_test(){
         for(auto &y:x) cout << y << ' ';
         cout << endl;
     }
+
 }
 
 
 int main(){
     FASTIO;
-    freopen("../Item_Placement_Genetic/input.txt", "w", stdout);
+    //Now run attribute generator first.
+    freopen("input.txt", "r", stdin);
+    freopen("test_input.txt", "w", stdout);
     int test_case = 1;
     cout << test_case << endl;
     while(test_case--){
