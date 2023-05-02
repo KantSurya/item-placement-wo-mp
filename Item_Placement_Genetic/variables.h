@@ -1,5 +1,7 @@
 
 int seed=12345678;
+const int inf = 1e9;
+
 
 int ROWS = 50, COLS = 50; 
 int docking_time = 1;    //==> T ==> dist + D 

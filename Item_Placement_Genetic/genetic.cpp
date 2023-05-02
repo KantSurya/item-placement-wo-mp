@@ -82,7 +82,7 @@ int main(){
 
         report ( currGen );
 
-        cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/1.0<<" seconds\n\n";
+        cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/1.0<<" seconds"<<endl<<endl;
 
     }
     _log("")    

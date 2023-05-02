@@ -26,9 +26,12 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
 }
 
 double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
-    // TODO : implement me 
-    find_best_path(allOrders,warehouse);
-    double t = cater_orders(allOrders);
+    // merging orders
+    vector<Order> mergedOrders = greedyMergeOrdersSize(allOrders);
+    // vector<Order> mergedOrders = CW1_merge(allOrders);
+    // vector<Order> mergedOrders = CW2_merge(allOrders);
+    find_best_path(mergedOrders,warehouse);
+    double t = cater_orders(mergedOrders);
     return (1.0)/t;
 }
 
@@ -255,6 +258,6 @@ void report ( int generation )
     double catering_time = 1.0 / (bestFitness*1.0);
     catering_time = ( catering_time * 1.0 ) / (velocity*1.0);
 
-    cout << "Generation " << generation << "  ---->  " << catering_time << " mins\n" ; 
+    cout << "Generation " << generation << "  ---->  " << catering_time << " mins" << endl ; 
 
 }
