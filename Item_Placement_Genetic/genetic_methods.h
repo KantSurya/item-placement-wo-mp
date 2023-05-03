@@ -26,12 +26,8 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
 }
 
 double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
-    // merging orders
-    vector<Order> mergedOrders = greedyMergeOrdersSize(allOrders);
-    // vector<Order> mergedOrders = CW1_merge(allOrders);
-    // vector<Order> mergedOrders = CW2_merge(allOrders);
-    find_best_path(mergedOrders,warehouse);
-    double t = cater_orders(mergedOrders);
+    find_best_path(allOrders,warehouse);
+    double t = cater_orders(allOrders);
     return (1.0)/t;
 }
 

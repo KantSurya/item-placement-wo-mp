@@ -99,7 +99,7 @@ vector<Order> CW1_merge(vector<Order>orderList)
     {
         for(int j=i+1;j<n;j++)
         {
-            if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>max_capacity_robot)
+            if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>capacity_of_robot)
                 continue;
             pair<int,vector<pair<int,Cell>>>temp;
             temp=nearest_neighbour_TSP(orderList[i].items);
@@ -127,7 +127,7 @@ vector<Order> CW1_merge(vector<Order>orderList)
         int orderIndex2=dsu_find(it.second.second,orderParent);
         if(orderList[orderIndex1].subOrderIndexes.size()>1&&orderList[orderIndex2].subOrderIndexes.size()>1)
             continue;
-        if(orderList[orderIndex1].getOrderSize()+orderList[orderIndex2].getOrderSize()>max_capacity_robot)
+        if(orderList[orderIndex1].getOrderSize()+orderList[orderIndex2].getOrderSize()>capacity_of_robot)
             continue;
         dsu_merge(orderIndex1,orderIndex2,orderParent,orderList);
     }
@@ -162,7 +162,7 @@ vector<Order> CW2_merge(vector<Order>orderList)
         {
             for(int j=i+1;j<n;j++)
             {
-                if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>max_capacity_robot)
+                if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>capacity_of_robot)
                     continue;
                 Order mergedOrder=mergeTwoOrders(orderList[i],orderList[j]);
                 pair<int,vector<pair<int,Cell>>>temp=nearest_neighbour_TSP(mergedOrder.items);
@@ -180,7 +180,7 @@ vector<Order> CW2_merge(vector<Order>orderList)
         {
             int orderIndex1=dsu_find(it.second.first,orderParent);
             int orderIndex2=dsu_find(it.second.second,orderParent);
-            if(orderList[orderIndex1].getOrderSize()+orderList[orderIndex2].getOrderSize()>max_capacity_robot)
+            if(orderList[orderIndex1].getOrderSize()+orderList[orderIndex2].getOrderSize()>capacity_of_robot)
                 continue;
             dsu_merge(orderIndex1,orderIndex2,orderParent,orderList);
             flag++;

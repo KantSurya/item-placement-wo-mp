@@ -39,10 +39,16 @@ int main(){
     hola;
     take_input();
     initialize(ROWS,COLS);
+    
+    
+
 
     _log("");
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
-    cout<<"Number of orders : " << num_of_orders << endl;
+    cout<<"Number of orders : " << allOrders.size() << endl;
+    allOrders = greedyMergeOrdersSize(allOrders);
+    cout<<"Number of orders (after merging): " << allOrders.size() << endl;
+
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
     cout<<"Distinct items in warehouse : " << ROWS * COLS << endl;
     clock_t geneticStartTime = clock();
