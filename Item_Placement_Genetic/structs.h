@@ -66,7 +66,8 @@ struct Genotype {
         this->AllItems.clear();
     }
 
-    Genotype(vector<vi>warehouse){
+    Genotype(vector<vi>warehouse,unordered_map<int,vector<Cell>>allItems){
         this->Warehouse = warehouse;
+        this->AllItems = allItems;
     }
 };

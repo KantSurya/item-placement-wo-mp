@@ -47,7 +47,7 @@ int main(){
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
     cout<<"Number of orders : " << allOrders.size() << endl;
     allOrders = greedyMergeOrdersSize(allOrders);
-    // allOrders = CW2_merge(allOrders);
+    allOrders = CW2_merge(allOrders);
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -62,9 +62,9 @@ int main(){
         vector<Genotype>children;
 
         for(auto &ind : parent_pairs){
-            vector<vi>child = crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
+            Genotype child= crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
 
-            children.push_back(Genotype(child));
+            children.push_back(child);
         }
 
         vector<Genotype> newPopulation = population;

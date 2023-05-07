@@ -109,10 +109,10 @@ void mutation_psm(vector<vi>&warehouse){
 }
 
 // Implemented for Distinct item in each cell. 
-vector<vi> crossover(vector<vi>&parentA, vector<vi>&parentB){
+Genotype crossover(vector<vi>&parentA, vector<vi>&parentB){
     int n = parentA.size();
     if(n<1){
-        return {{-1}};
+        _error("invlaid parent in crossover");
     }
     int m = parentA[0].size();
     
@@ -172,7 +172,11 @@ vector<vi> crossover(vector<vi>&parentA, vector<vi>&parentB){
         currItem = nextItem;
         itemSet.erase(currItem);
     }
-    return child;  
+
+    Genotype childGenotype;
+    childGenotype.Warehouse = child;
+    childGenotype.AllItems = GetItemsMappingForWarehouse(childGenotype.Warehouse);
+    return childGenotype;  
 }
 
 int roulette_wheel_selection(vector<pair<double,int>>&probability)

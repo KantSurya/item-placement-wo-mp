@@ -262,3 +262,19 @@ Genotype initial_pop(int n,int m){
 
     return gene;
 }
+
+// currenlty for 1 item warehouse placement
+unordered_map<int,vector<Cell>> GetItemsMappingForWarehouse(vector<vi>&warehouse){
+  unordered_map<int,vector<Cell>> allItems;
+
+  int n = warehouse.size();
+  int m = warehouse[0].size();
+
+  fi(0,n-1){
+    fj(0,m-1){
+      allItems[warehouse[i][j]] = {Cell(i,j)};
+    }
+  }
+
+  return allItems;
+}
