@@ -47,6 +47,7 @@ int main(){
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
     cout<<"Number of orders : " << allOrders.size() << endl;
     allOrders = greedyMergeOrdersSize(allOrders);
+    // allOrders = CW2_merge(allOrders);
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -70,7 +71,7 @@ int main(){
         for(auto & child : children){
             double rand = r8_uniform_ab(0.0,1.0);
             if(rand < PMUTATION){
-                mutation_rsm(child.Warehouse);
+                mutation_rsm(child);
             }
 
             child.fitness = GetFitness(child.Warehouse,allOrders);

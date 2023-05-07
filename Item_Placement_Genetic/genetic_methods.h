@@ -42,7 +42,7 @@ void initialize(int rows, int cols){
     
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
-        population[i] = Genotype(GetRandomMember(rows,cols));
+        population[i] = GetRandomMember(rows,cols);
         population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
     }
 
@@ -55,14 +55,14 @@ void initialize(int rows, int cols){
 */
 
 // Implemented for Distinct item in each cell. 
-void mutation_rsm(vector<vector<int>>&warehouse){
-    int n = warehouse.size();
+void mutation_rsm(Genotype& gene){
+    int n = gene.Warehouse.size();
     if(n<1){
-        warehouse = vector<vi>(1,vi(1,-1));
+        gene.Warehouse = vector<vi>(1,vi(1,-1));
         _error("Empty warehouse provided for mutation");
         return;
     }
-    int m = warehouse[0].size();
+    int m = gene.Warehouse[0].size();
 
     Cell i = GetRandomCell(n,m);
     Cell j = GetRandomCell(n,m);
@@ -72,7 +72,13 @@ void mutation_rsm(vector<vector<int>>&warehouse){
     }
 
     while( i < j ){
-        swap(warehouse[i.x][i.y] , warehouse[j.x][j.y]);
+        int itemA = gene.Warehouse[i.x][i.y];
+        int itemB = gene.Warehouse[j.x][j.y];
+
+        gene.AllItems[itemA] = {Cell(i.x,i.y)};
+        gene.AllItems[itemB] = {Cell(j.x,j.y)};
+
+        swap(gene.Warehouse[i.x][i.y] , gene.Warehouse[j.x][j.y]);
         
         i = GetNextCell(i,n,m);
         j = GetPrevCell(j,n,m);

@@ -74,22 +74,25 @@ int distance(Cell& a, Cell& b){
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-vector<vi>GetRandomMember(int n,int m){
+Genotype GetRandomMember(int n,int m){
     // clock_t start = clock();
+    Genotype randomGene ;
     vector<int>ar(n*m);
     for(int i = 0 ; i < n*m ; ++i){
         ar[i] = i;
     }
     shuffle(ar.begin(),ar.end(),rng);
 
-    vector<vi>randomMember(n,vi(m));
+    randomGene.Warehouse = vector<vi>(n,vi(m));
     for(int i = 0 ; i < n*m ; ++i){
         int x = i/m;
         int y = i%m;
 
-        randomMember[x][y] = ar[i];
+        randomGene.Warehouse[x][y] = ar[i];
+        randomGene.AllItems[i] = {Cell(x,y)};
     }
-    return randomMember;
+
+    return randomGene;
 }
 
 // ------------------------------------------------------------------------------------------------ 
@@ -239,19 +242,23 @@ void timestamp ( )
 }
 
 
-vector<vector<int>> initial_pop(int n,int m){
+Genotype initial_pop(int n,int m){
     //currently assuming n % 10, m % 10. 
     int str = 0;
     int gap = 5;
-    vector<vector<int>> mat(n,vector<int>(m));
+    Genotype gene;
+    gene.Warehouse = vector(n,vector<int>(m));
     for(int i = 0; i < n; i += gap){
         for(int j = 0; j < m; j += gap){
             for(int l = i; l < min(i + gap,n); l++){
                 for(int k = j; k < min(j + gap,m); k++){
-                    mat[l][k] = str;
+                    gene.Warehouse[l][k] = str;
+                    gene.AllItems[str] = {Cell(l,k)};
                     str++;
                 }
             }
         }
     }
+
+    return gene;
 }
