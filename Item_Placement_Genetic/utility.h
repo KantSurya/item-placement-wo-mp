@@ -237,3 +237,21 @@ void timestamp ( )
   return;
 # undef TIME_SIZE
 }
+
+
+vector<vector<int>> initial_pop(int n,int m){
+    //currently assuming n % 10, m % 10. 
+    int str = 0;
+    int gap = 5;
+    vector<vector<int>> mat(n,vector<int>(m));
+    for(int i = 0; i < n; i += gap){
+        for(int j = 0; j < m; j += gap){
+            for(int l = i; l < min(i + gap,n); l++){
+                for(int k = j; k < min(j + gap,m); k++){
+                    mat[l][k] = str;
+                    str++;
+                }
+            }
+        }
+    }
+}
