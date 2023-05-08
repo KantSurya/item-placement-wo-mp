@@ -40,13 +40,10 @@ int main(){
     take_input();
     initialize(ROWS,COLS);
     
-    
-
-
     _log("");
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
     cout<<"Number of orders : " << allOrders.size() << endl;
-    allOrders = greedyMergeOrdersSize(allOrders);
+    allOrders = CW2_merge(allOrders,population[0].AllItems);
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -61,25 +58,25 @@ int main(){
         vector<Genotype>children;
 
         for(auto &ind : parent_pairs){
-            vector<vi>child = crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
+            Genotype child= crossover(population[ind.first].Warehouse , population[ind.second].Warehouse);
 
-            children.push_back(Genotype(child));
+            children.push_back(child);
         }
 
         vector<Genotype> newPopulation = population;
         for(auto & child : children){
             double rand = r8_uniform_ab(0.0,1.0);
             if(rand < PMUTATION){
-                mutation_rsm(child.Warehouse);
+                mutation_rsm(child);
             }
 
-            child.fitness = GetFitness(child.Warehouse,allOrders);
+            child.fitness = GetFitness(child,allOrders);
             newPopulation.push_back(child);
         }
 
         for(int i = 0 ; i < 0.2 * POPSIZE ; ++i){
             Genotype randomMember = GetRandomMember(ROWS,COLS);
-            randomMember.fitness = GetFitness(randomMember.Warehouse,allOrders);
+            randomMember.fitness = GetFitness(randomMember,allOrders);
             
             newPopulation.push_back(randomMember);
         }

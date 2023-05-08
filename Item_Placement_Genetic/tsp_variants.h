@@ -1,4 +1,4 @@
-pair<int,vector<pair<int,Cell>>> nearest_neighbour_TSP(vector<int>items)
+pair<int,vector<pair<int,Cell>>> nearest_neighbour_TSP(vector<int>&items, unordered_map<int,vector<Cell>>&allItems)
 {
     int n=items.size();
     int time=0;
@@ -17,7 +17,7 @@ pair<int,vector<pair<int,Cell>>> nearest_neighbour_TSP(vector<int>items)
                 continue;
             Cell bestCell;
             int bestDistance=inf;
-            for(auto &cell:allItems[items[i]].cells)
+            for(auto &cell:allItems[items[i]])
             {
                 if(distance(currentCell,cell)<bestDistance)
                 {

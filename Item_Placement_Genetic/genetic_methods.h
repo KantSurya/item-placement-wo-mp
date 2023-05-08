@@ -25,8 +25,9 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
     }
 }
 
-double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
-    find_best_path(allOrders,warehouse);
+double GetFitness(Genotype gene,vector<Order> allOrders){
+    // vector<Order>mergedOrders = CW2_merge(allOrders,gene.AllItems);
+    find_best_path(allOrders,gene.Warehouse);
     double t = cater_orders(allOrders);
     return (1.0)/t;
 }
@@ -42,12 +43,12 @@ void initialize(int rows, int cols){
     
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
-        population[i] = Genotype(GetRandomMember(rows,cols));
-        population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
+        population[i] = GetRandomMember(rows,cols);
+        population[i].fitness = GetFitness(population[i],allOrders);
     }
 
     // TODO : Figure out why 0th population is coming as infinity
-    population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
+    population[0].fitness = GetFitness(population[0],allOrders);
 }
 
 /*
@@ -55,14 +56,14 @@ void initialize(int rows, int cols){
 */
 
 // Implemented for Distinct item in each cell. 
-void mutation_rsm(vector<vector<int>>&warehouse){
-    int n = warehouse.size();
+void mutation_rsm(Genotype& gene){
+    int n = gene.Warehouse.size();
     if(n<1){
-        warehouse = vector<vi>(1,vi(1,-1));
+        gene.Warehouse = vector<vi>(1,vi(1,-1));
         _error("Empty warehouse provided for mutation");
         return;
     }
-    int m = warehouse[0].size();
+    int m = gene.Warehouse[0].size();
 
     Cell i = GetRandomCell(n,m);
     Cell j = GetRandomCell(n,m);
@@ -72,7 +73,13 @@ void mutation_rsm(vector<vector<int>>&warehouse){
     }
 
     while( i < j ){
-        swap(warehouse[i.x][i.y] , warehouse[j.x][j.y]);
+        int itemA = gene.Warehouse[i.x][i.y];
+        int itemB = gene.Warehouse[j.x][j.y];
+
+        gene.AllItems[itemA] = {Cell(i.x,i.y)};
+        gene.AllItems[itemB] = {Cell(j.x,j.y)};
+
+        swap(gene.Warehouse[i.x][i.y] , gene.Warehouse[j.x][j.y]);
         
         i = GetNextCell(i,n,m);
         j = GetPrevCell(j,n,m);
@@ -103,10 +110,10 @@ void mutation_psm(vector<vi>&warehouse){
 }
 
 // Implemented for Distinct item in each cell. 
-vector<vi> crossover(vector<vi>&parentA, vector<vi>&parentB){
+Genotype crossover(vector<vi>&parentA, vector<vi>&parentB){
     int n = parentA.size();
     if(n<1){
-        return {{-1}};
+        _error("invlaid parent in crossover");
     }
     int m = parentA[0].size();
     
@@ -166,7 +173,11 @@ vector<vi> crossover(vector<vi>&parentA, vector<vi>&parentB){
         currItem = nextItem;
         itemSet.erase(currItem);
     }
-    return child;  
+
+    Genotype childGenotype;
+    childGenotype.Warehouse = child;
+    childGenotype.AllItems = GetItemsMappingForWarehouse(childGenotype.Warehouse);
+    return childGenotype;  
 }
 
 int roulette_wheel_selection(vector<pair<double,int>>&probability)
