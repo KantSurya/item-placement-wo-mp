@@ -25,8 +25,9 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
     }
 }
 
-double GetFitness(vector<vi>warehouse,vector<Order> allOrders){
-    find_best_path(allOrders,warehouse);
+double GetFitness(Genotype gene,vector<Order> allOrders){
+    // vector<Order>mergedOrders = CW2_merge(allOrders,gene.AllItems);
+    find_best_path(allOrders,gene.Warehouse);
     double t = cater_orders(allOrders);
     return (1.0)/t;
 }
@@ -43,11 +44,11 @@ void initialize(int rows, int cols){
     // Initialize with random population
     for(int i = 0 ; i < POPSIZE ; ++i){
         population[i] = GetRandomMember(rows,cols);
-        population[i].fitness = GetFitness(population[i].Warehouse,allOrders);
+        population[i].fitness = GetFitness(population[i],allOrders);
     }
 
     // TODO : Figure out why 0th population is coming as infinity
-    population[0].fitness = GetFitness(population[0].Warehouse,allOrders);
+    population[0].fitness = GetFitness(population[0],allOrders);
 }
 
 /*

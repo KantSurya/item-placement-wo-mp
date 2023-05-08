@@ -88,7 +88,7 @@ vector<Order> greedyMergeOrdersSize(vector<Order>&orderList)
     return mergedOrders;
 }
 
-vector<Order> CW1_merge(vector<Order>orderList)  
+vector<Order> CW1_merge(vector<Order>orderList,unordered_map<int,vector<Cell>>&allItems)  
 {
     int n=orderList.size();
     vector<int>orderParent(n);
@@ -102,14 +102,14 @@ vector<Order> CW1_merge(vector<Order>orderList)
             if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>capacity_of_robot)
                 continue;
             pair<int,vector<pair<int,Cell>>>temp;
-            temp=nearest_neighbour_TSP(orderList[i].items);
+            temp=nearest_neighbour_TSP(orderList[i].items,allItems);
             orderList[i].time=temp.first;
             orderList[i].optimalpath=temp.second;
-            temp=nearest_neighbour_TSP(orderList[j].items);
+            temp=nearest_neighbour_TSP(orderList[j].items,allItems);
             orderList[j].time=temp.first;
             orderList[j].optimalpath=temp.second;
             Order mergedOrder=mergeTwoOrders(orderList[i],orderList[j]);
-            temp=nearest_neighbour_TSP(mergedOrder.items);
+            temp=nearest_neighbour_TSP(mergedOrder.items,allItems);
             mergedOrder.time=temp.first;
             mergedOrder.optimalpath=temp.second;
             int sav1=orderList[i].time;
@@ -141,7 +141,7 @@ vector<Order> CW1_merge(vector<Order>orderList)
     return mergedOrders;
 }
 
-vector<Order> CW2_merge(vector<Order>orderList)  
+vector<Order> CW2_merge(vector<Order>orderList,unordered_map<int,vector<Cell>>&allItems)  
 {
     while(1)
     {
@@ -152,7 +152,7 @@ vector<Order> CW2_merge(vector<Order>orderList)
         vector<int>savings_single(n);
         for(int i=0;i<n;i++)
         {
-            pair<int,vector<pair<int,Cell>>>temp=nearest_neighbour_TSP(orderList[i].items);
+            pair<int,vector<pair<int,Cell>>>temp=nearest_neighbour_TSP(orderList[i].items,allItems);
             orderList[i].time=temp.first;
             orderList[i].optimalpath=temp.second;
             savings_single[i]=orderList[i].time;
@@ -165,7 +165,7 @@ vector<Order> CW2_merge(vector<Order>orderList)
                 if(orderList[i].getOrderSize()+orderList[j].getOrderSize()>capacity_of_robot)
                     continue;
                 Order mergedOrder=mergeTwoOrders(orderList[i],orderList[j]);
-                pair<int,vector<pair<int,Cell>>>temp=nearest_neighbour_TSP(mergedOrder.items);
+                pair<int,vector<pair<int,Cell>>>temp=nearest_neighbour_TSP(mergedOrder.items,allItems);
                 mergedOrder.time=temp.first;
                 mergedOrder.optimalpath=temp.second;
                 int sav=savings_single[i]+savings_single[j]-mergedOrder.time;

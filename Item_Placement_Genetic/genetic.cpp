@@ -40,14 +40,10 @@ int main(){
     take_input();
     initialize(ROWS,COLS);
     
-    
-
-
     _log("");
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
     cout<<"Number of orders : " << allOrders.size() << endl;
-    allOrders = greedyMergeOrdersSize(allOrders);
-    allOrders = CW2_merge(allOrders);
+    allOrders = CW2_merge(allOrders,population[0].AllItems);
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -74,13 +70,13 @@ int main(){
                 mutation_rsm(child);
             }
 
-            child.fitness = GetFitness(child.Warehouse,allOrders);
+            child.fitness = GetFitness(child,allOrders);
             newPopulation.push_back(child);
         }
 
         for(int i = 0 ; i < 0.2 * POPSIZE ; ++i){
             Genotype randomMember = GetRandomMember(ROWS,COLS);
-            randomMember.fitness = GetFitness(randomMember.Warehouse,allOrders);
+            randomMember.fitness = GetFitness(randomMember,allOrders);
             
             newPopulation.push_back(randomMember);
         }
