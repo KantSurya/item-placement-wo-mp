@@ -39,7 +39,7 @@ void dsu_merge(int o1,int o2,vector<int>&orderParent,vector<Order>&orderList)
 // -------------------------------------------------------------------------------------------------
 
 // Iterates over all orders and greedily merges the largest possible order into current order
-vector<Order> greedyMergeOrdersSize(vector<Order>&orderList)  
+vector<Order> greedyMergeOrdersSize(vector<Order>orderList)  
 {
     int n=orderList.size();
     vector<int>orderParent(n);
@@ -88,7 +88,7 @@ vector<Order> greedyMergeOrdersSize(vector<Order>&orderList)
     return mergedOrders;
 }
 
-vector<Order> CW1_merge(vector<Order>orderList,unordered_map<int,vector<Cell>>&allItems)  
+vector<Order> CW1_merge(vector<Order>orderList,vector<vector<Cell>>&allItems)  
 {
     int n=orderList.size();
     vector<int>orderParent(n);
@@ -141,7 +141,7 @@ vector<Order> CW1_merge(vector<Order>orderList,unordered_map<int,vector<Cell>>&a
     return mergedOrders;
 }
 
-vector<Order> CW2_merge(vector<Order>orderList,unordered_map<int,vector<Cell>>&allItems)  
+vector<Order> CW2_merge(vector<Order>orderList,vector<vector<Cell>>&allItems)  
 {
     while(1)
     {

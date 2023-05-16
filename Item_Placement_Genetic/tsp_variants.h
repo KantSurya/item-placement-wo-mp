@@ -1,4 +1,4 @@
-pair<int,vector<pair<int,Cell>>> nearest_neighbour_TSP(vector<int>&items, unordered_map<int,vector<Cell>>&allItems)
+pair<int,vector<pair<int,Cell>>> nearest_neighbour_TSP(vector<int>&items, vector<vector<Cell>>&allItems)
 {
     int n=items.size();
     int time=0;

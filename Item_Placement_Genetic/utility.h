@@ -89,7 +89,6 @@ Genotype GetRandomMember(int n,int m){
         int y = i%m;
 
         randomGene.Warehouse[x][y] = ar[i];
-        randomGene.AllItems[i] = {Cell(x,y)};
     }
 
     return randomGene;
@@ -253,7 +252,6 @@ Genotype initial_pop(int n,int m){
             for(int l = i; l < min(i + gap,n); l++){
                 for(int k = j; k < min(j + gap,m); k++){
                     gene.Warehouse[l][k] = str;
-                    gene.AllItems[str] = {Cell(l,k)};
                     str++;
                 }
             }
@@ -264,8 +262,8 @@ Genotype initial_pop(int n,int m){
 }
 
 // currenlty for 1 item warehouse placement
-unordered_map<int,vector<Cell>> GetItemsMappingForWarehouse(vector<vi>&warehouse){
-  unordered_map<int,vector<Cell>> allItems;
+vector<vector<Cell>> GetItemsMappingForWarehouse(vector<vi>&warehouse,int totalItems){
+  vector<vector<Cell>>allItems(totalItems);
 
   int n = warehouse.size();
   int m = warehouse[0].size();

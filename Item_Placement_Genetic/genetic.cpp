@@ -43,7 +43,12 @@ int main(){
     _log("");
     cout<<"Warehouse : " << ROWS << "x" << COLS << endl;
     cout<<"Number of orders : " << allOrders.size() << endl;
-    allOrders = CW2_merge(allOrders,population[0].AllItems);
+
+    // Order merging 
+    vector<vector<Cell>>allItems = GetItemsMappingForWarehouse(population[0].Warehouse,number_of_total_items);
+    allOrders = CW2_merge(allOrders,allItems);
+
+
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -66,9 +71,15 @@ int main(){
         vector<Genotype> newPopulation = population;
         for(auto & child : children){
             double rand = r8_uniform_ab(0.0,1.0);
-            if(rand < PMUTATION){
+            if(rand < PMUTATION_RSM){
                 mutation_rsm(child);
+            }else{
+                mutation_psm(child);
             }
+
+            // if (rand < 0.6){
+            //     mutation_psm(child);
+            // }
 
             child.fitness = GetFitness(child,allOrders);
             newPopulation.push_back(child);
