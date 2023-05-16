@@ -58,16 +58,17 @@ struct Order{
 
 struct Genotype {
     vector<vi>Warehouse;   // warehouse[i][j] : item in i,j cell
-    unordered_map<int,vector<Cell>>AllItems;
+    // unordered_map<int,vector<Cell>>AllItems; // removed it because of increased computation time
     double fitness;
     
     Genotype(){
         this->Warehouse.clear();
-        this->AllItems.clear();
+        // this->AllItems.clear();
     }
 
-    Genotype(vector<vi>warehouse,unordered_map<int,vector<Cell>>allItems){
+    // Genotype(vector<vi>warehouse,unordered_map<int,vector<Cell>>allItems){
+    Genotype(vector<vi>warehouse){
         this->Warehouse = warehouse;
-        this->AllItems = allItems;
+        // this->AllItems = allItems;
     }
 };
