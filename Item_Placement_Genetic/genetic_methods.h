@@ -25,7 +25,7 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
     }
 }
 
-double GetFitness(Genotype gene,vector<Order> allOrders){
+double GetFitness(Genotype& gene,vector<Order>&allOrders){
     // vector<Order>mergedOrders = CW2_merge(allOrders,gene.AllItems);
     find_best_path(allOrders,gene.Warehouse);
     double t = cater_orders(allOrders);
@@ -36,7 +36,8 @@ void initialize(int rows, int cols){
     // Genetic variables
     POPSIZE = 4 * num_of_orders;
     MAXGENS = 30;
-    PMUTATION = 0.5;
+    PMUTATION_RSM = 0.4;
+    PMUTATION_PSM = 0.8;
 
     population.clear();
     population = vector<Genotype>(POPSIZE);
@@ -49,6 +50,10 @@ void initialize(int rows, int cols){
 
     // TODO : Figure out why 0th population is coming as infinity
     population[0].fitness = GetFitness(population[0],allOrders);
+
+    sort(population.begin(),population.end(),[](const struct Genotype& a, const struct Genotype& b)->bool{
+        return a.fitness>b.fitness;
+    });
 }
 
 /*
@@ -76,8 +81,8 @@ void mutation_rsm(Genotype& gene){
         int itemA = gene.Warehouse[i.x][i.y];
         int itemB = gene.Warehouse[j.x][j.y];
 
-        gene.AllItems[itemA] = {Cell(i.x,i.y)};
-        gene.AllItems[itemB] = {Cell(j.x,j.y)};
+        // gene.AllItems[itemA] = {Cell(i.x,i.y)};
+        // gene.AllItems[itemB] = {Cell(j.x,j.y)};
 
         swap(gene.Warehouse[i.x][i.y] , gene.Warehouse[j.x][j.y]);
         
@@ -87,14 +92,13 @@ void mutation_rsm(Genotype& gene){
 }
 
 
-void mutation_psm(vector<vi>&warehouse){
-    int n = warehouse.size();
+void mutation_psm(Genotype& gene){
+    int n = gene.Warehouse.size();
     if(n<1){
-        warehouse = vector<vi>(1,vi(1,-1));
         _error("Empty warehouse provided for mutation");
         return;
     }
-    int m = warehouse[0].size();
+    int m = gene.Warehouse[0].size();
 
     double psmMutationProb = 0.8;
     fi(0,n-1){
@@ -102,7 +106,7 @@ void mutation_psm(vector<vi>&warehouse){
             double p = r8_uniform_ab(0.0,1.0);
             if( p < psmMutationProb ){
                 Cell randomCell = GetRandomCell(n,m);
-                swap( warehouse[i][j] , warehouse[randomCell.x][randomCell.y]  );
+                swap( gene.Warehouse[i][j] , gene.Warehouse[randomCell.x][randomCell.y]  );
             }
         }
     }
@@ -176,7 +180,7 @@ Genotype crossover(vector<vi>&parentA, vector<vi>&parentB){
 
     Genotype childGenotype;
     childGenotype.Warehouse = child;
-    childGenotype.AllItems = GetItemsMappingForWarehouse(childGenotype.Warehouse);
+    // childGenotype.AllItems = GetItemsMappingForWarehouse(childGenotype.Warehouse);
     return childGenotype;  
 }
 

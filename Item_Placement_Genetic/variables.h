@@ -27,7 +27,8 @@ vector<Item>allItems;
 */
 int POPSIZE;
 int MAXGENS;
-double PMUTATION;
+double PMUTATION_RSM;
+double PMUTATION_PSM;
 
 vector<Genotype>population;
 
