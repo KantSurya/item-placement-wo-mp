@@ -37,7 +37,10 @@ void take_input(){
 int main(){
     FASTIO;
     hola;
+    _log("Input started");
     take_input();
+
+    _log("Initial population started");
     initialize(ROWS,COLS);
     
     _log("");
@@ -45,10 +48,10 @@ int main(){
     cout<<"Number of orders : " << allOrders.size() << endl;
 
     // Order merging 
-    vector<vector<Cell>>allItems = GetItemsMappingForWarehouse(population[0].Warehouse,number_of_total_items);
-    allOrders = CW2_merge(allOrders,allItems);
+    // vector<vector<Cell>>allItems = GetItemsMappingForWarehouse(population[0].Warehouse,number_of_total_items);
+    // allOrders = CW2_merge(allOrders,allItems);
 
-
+    allOrders = greedyMergeOrdersSize(allOrders);
     cout<<"Number of orders (after merging): " << allOrders.size() << endl;
 
     cout<<"Capacity of robots : " << capacity_of_robot << endl;
@@ -98,6 +101,12 @@ int main(){
 
         cout<<"Computation Time: "<<((double)(clock()-tStart)/CLOCKS_PER_SEC)/1.0<<" seconds"<<endl<<endl;
 
+        for(int i = 0 ; i < POPSIZE ; ++i){
+            if(!ValidateGene(population[i])){
+                _log("panic : invalid genotype ")
+                exit(0);
+            }
+        }
     }
     _log("")    
     printTimeElapsedMins(geneticStartTime,"Total time for GA :- ");

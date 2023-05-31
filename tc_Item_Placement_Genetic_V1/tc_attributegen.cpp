@@ -66,7 +66,7 @@ int max_number_of_total_items;
 const int max_cells_in_item = 1;  
 
 
-int ROWS = 100, COLS = 100;     // 250m x 250m 
+int ROWS = 15, COLS = 15;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
@@ -208,7 +208,9 @@ void out_for_test(){
     cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;
     cout << num_of_robots << " " << edges.size() << endl;
     cout << number_of_total_items << " " << endl;
+    
     for(auto &x:edges){
+        cout<<2<<endl;  // 2 is curr order size 
         cout << x.first << ' ' << x.second << endl;
     }
     // // For test case generation, should not affect current genetic algo , still test this once

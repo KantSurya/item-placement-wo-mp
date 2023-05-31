@@ -135,9 +135,8 @@ vector<vector<int>> generate_ini_pop(vector<vector<int>> orders,int number_of_it
 }
 
 
-void out_for_test(){
-
-    // docking_time = rand(0,max_docking_time);
+vector<vector<int>> take_attribute_gen_input(){
+// docking_time = rand(0,max_docking_time);
     // num_of_orders = rand(1,max_number_order);
     // num_of_robots = rand(1,max_number_robots);
     // velocity = rand(()1,max_velocity);
@@ -156,6 +155,14 @@ void out_for_test(){
         cin >> a >> b;
         order.push_back({a,b});
     }
+
+    return order;
+}
+
+void out_for_test(vector<vector<int>>order){
+    // dummy -1 is printed to distinguish between multiple initial population in input text file
+    cout<<-1<<endl;
+
     set<int> s;
     auto mat = generate_ini_pop(order,number_of_total_items);
     for(auto &x:mat){
@@ -171,10 +178,15 @@ int main(){
     FASTIO;
     //Now run attribute generator first.
     freopen("input.txt", "r", stdin);
-    freopen("test_input.txt", "w", stdout);
-    int test_case = 1;
+    freopen("init_pop_input.txt", "w", stdout);
+
+
+    // no of initial population = no. of orders = no of test_cases
+    vector<vector<int>>order = take_attribute_gen_input();
+    int test_case = order.size();
     cout << test_case << endl;
+
     while(test_case--){
-        out_for_test();
+        out_for_test(order);
     }
 }

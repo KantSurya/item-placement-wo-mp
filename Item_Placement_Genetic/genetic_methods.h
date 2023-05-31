@@ -41,10 +41,24 @@ void initialize(int rows, int cols){
 
     population.clear();
     population = vector<Genotype>(POPSIZE);
-    
-    // Initialize with random population
+
+    freopen("init_pop_input.txt", "r", stdin);
+    int inputInitCases;
+    cin>> inputInitCases;
+
+    // inputInitCases = 0;
+
     for(int i = 0 ; i < POPSIZE ; ++i){
-        population[i] = GetRandomMember(rows,cols);
+        if (inputInitCases >0) {
+            population[i] = TakeInputGeneratedInitMember(rows,cols);
+            inputInitCases--;
+        }
+        else{
+            population[i] = GetRandomMember(rows,cols);
+        }
+        if(!ValidateGene(population[i])){
+            _log("panic : invalid genotype ")
+        }
         population[i].fitness = GetFitness(population[i],allOrders);
     }
 

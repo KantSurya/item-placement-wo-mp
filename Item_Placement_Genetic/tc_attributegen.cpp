@@ -66,7 +66,7 @@ int max_number_of_total_items;
 const int max_cells_in_item = 1;  
 
 
-int ROWS = 100, COLS = 100;     // 250m x 250m 
+int ROWS = 15, COLS = 15;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
@@ -128,6 +128,41 @@ int number_of_total_items;
 // }
 
 
+set<pair<int,int>> generate_graph(int number_of_items,int per_group_item,int rep){
+    set<pair<int,int>> edges;
+    vector<int> bit_count;
+    for(int i = 1; i < (1<<per_group_item); i++){
+        int cnt = 0;
+        for(int j = 0; j < per_group_item; j++){
+            cnt += ((i >> j)&1);
+        }
+        if(cnt == 3) bit_count.push_back(i);
+    }
+    int s = bit_count.size();
+    for(int i = 0; i < number_of_items; i += per_group_item){
+        for(int r = 0; r < rep; r++){
+            vector<int> items;
+            int val = rand(0,s - 1);
+            int bit = bit_count[val];
+            for(int j = 0; j < per_group_item; j++){
+                if((bit>>j)&1){
+                    items.push_back(i + j);
+                }
+            }
+            int e = items.size();
+            for(int it = 0; it < items.size(); it++){
+                edges.insert({items[it],items[(it + 1) % e]});
+            }
+            if(i){
+                int p_n = rand(0,i - 1);
+                edges.insert({p_n,items[0]});
+            }
+        }
+    }
+    return edges;
+}
+
+
 void out_for_test(){
 
     // docking_time = rand(0,max_docking_time);
@@ -141,65 +176,53 @@ void out_for_test(){
     docking_time = max_docking_time;
     number_of_total_items=ROWS*COLS;
     max_number_of_total_items = ROWS * COLS;
-    
     int gap = 10,rep = 10;
     vector<int> bit_count;
-    for(int i = 1; i < (1<<gap); i++){
-        int cnt = 0;
-        for(int j = 0; j < gap; j++){
-            cnt += ((i >> j)&1);
-        }
-        if(cnt <= 3) bit_count.push_back(i);
-    }
+
     int s = bit_count.size();
     int id = 0;
     vector<vector<vector<int>>> ind;
     vector<vector<int>> tot_ord;
     set<int> num;
-    
     num_of_orders = 0;
-    for(int i = 0; i < max_number_of_total_items; i += gap){
-        ind.emplace_back();
-        for(int r = 0; r < rep; r++){
-            vector<int> items;
-            int val = rand(0,s - 1);
-            int bit = bit_count[val];
-            for(int j = 0; j < gap; j++){
-                if((bit>>j)&1){
-                    items.push_back(i + j);
-                }
-            }
-            num_of_orders++;
-            ind[id].push_back(items);
-        }
-        shuffle(ind[id].begin(),ind[id].end(),rng);
-        id++;
-        if(num_of_orders>=max_number_order){
-            break;
-        }
-    }
+    //Attribute is being generated here
+
+    // for(int i = 0; i < max_number_of_total_items; i += gap){
+    //     ind.emplace_back();
+    //     for(int r = 0; r < rep; r++){
+    //         vector<int> items;
+    //         int val = rand(0,s - 1);
+    //         int bit = bit_count[val];
+    //         for(int j = 0; j < gap; j++){
+    //             if((bit>>j)&1){
+    //                 items.push_back(i + j);
+    //             }
+    //         }
+    //         ind[id].push_back(items);
+    //     }
+    //     shuffle(ind[id].begin(),ind[id].end(),rng);
+    //     id++;
+    // }
+    
+    auto edges = generate_graph(max_number_of_total_items,10,10);
     cout << ROWS << " "  << COLS << " " <<  docking_time << " " << velocity << " " << capacity_of_robot << endl;
-    cout << num_of_robots << " " << num_of_orders << endl;
+    cout << num_of_robots << " " << edges.size() << endl;
     cout << number_of_total_items << " " << endl;
-    shuffle(ind.begin(),ind.end(),rng);
-    vector<vector<int>> ans;
-    for(int i = 0; i < id; i++){
-        for(auto &x:ind[i]){
-            cout<<x.size()<<endl;
-            for(auto &y:x) cout << y << " ";
-            cout << endl;
-        }
+    
+    for(auto &x:edges){
+        cout<<2<<endl;  // 2 is curr order size 
+        cout << x.first << ' ' << x.second << endl;
     }
-    // For test case generation, should not affect current genetic algo , still test this once
-    cout << id << endl;
-    for(int i = 0; i < id; i++){
-        cout << ind[i].size() << endl;
-        for(auto &x:ind[i]){
-            cout<<x.size()<<endl;
-            for(auto &y:x) cout << y << " ";
-            cout << endl;
-        }
-    }
+    // // For test case generation, should not affect current genetic algo , still test this once
+    // cout << id << endl;
+    // for(int i = 0; i < id; i++){
+    //     cout << ind[i].size() << endl;
+    //     for(auto &x:ind[i]){
+    //         cout<<x.size()<<endl;
+    //         for(auto &y:x) cout << y << " ";
+    //         cout << endl;
+    //     }
+    // }
 
     
 }
