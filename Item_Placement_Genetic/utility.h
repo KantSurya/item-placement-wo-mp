@@ -74,6 +74,23 @@ int distance(Cell& a, Cell& b){
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
+Genotype TakeInputGeneratedInitMember(int n,int m){
+  Genotype inputGene; 
+  inputGene.Warehouse = vector<vi>(n,vi(m));
+
+  // dummy -1 is added in test_input.txt to distinguish between multiple initial population in input text file
+  int dummyInput;
+  cin>>dummyInput;
+
+  for(int i = 0 ; i < n ; ++i){
+    for(int j = 0 ; j < m ; ++j){
+      cin>> inputGene.Warehouse[i][j];
+    }
+  }
+
+  return inputGene;
+}
+
 Genotype GetRandomMember(int n,int m){
     // clock_t start = clock();
     Genotype randomGene ;
@@ -92,6 +109,28 @@ Genotype GetRandomMember(int n,int m){
     }
 
     return randomGene;
+}
+
+bool ValidateGene(Genotype& gene){
+    int n = gene.Warehouse.size();
+    if(n<1)return false;
+    int m = gene.Warehouse[0].size();
+
+    int uniqueItems = n*m;
+    unordered_map<int,int>mp;
+    for(int i = 0 ; i < n ; ++i){
+      for(int j = 0 ; j < m ; ++j){
+        mp[gene.Warehouse[i][j]]++;
+      }
+    }
+
+    for(int i = 0 ; i < n*m ; ++i){
+      if(mp[i]!=1){
+        return false;
+      }
+    }
+    
+    return (mp.size() == uniqueItems);
 }
 
 // ------------------------------------------------------------------------------------------------ 
