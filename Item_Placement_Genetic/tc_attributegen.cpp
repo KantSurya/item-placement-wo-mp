@@ -66,7 +66,7 @@ int max_number_of_total_items;
 const int max_cells_in_item = 1;  
 
 
-int ROWS = 15, COLS = 15;     // 250m x 250m 
+int ROWS = 20, COLS = 20;     // 250m x 250m 
 int docking_time;    //==> T ==> dist + D 
 int num_of_robots;
 int num_of_orders;
