@@ -27,7 +27,9 @@ void GeneratePlacementStrategyOutput(vector<vi>&warehouse){
 
 double GetFitness(Genotype& gene,vector<Order>&allOrders){
     // vector<Order>mergedOrders = CW2_merge(allOrders,gene.AllItems);
-    find_best_path(allOrders,gene.Warehouse);
+
+    // find_best_path(allOrders,gene.Warehouse);
+    find_best_path_2(allOrders,gene.Warehouse);
     double t = cater_orders(allOrders);
     return (1.0)/t;
 }
